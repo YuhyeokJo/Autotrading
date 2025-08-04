@@ -38,3 +38,24 @@ def test_login_kiwer_mock(mocker: MockerFixture, user_info):
     stock_brocker = StockBrocker("kiwer", driver)
     driver.login(user_info.user_id, user_info.password)
     assert stock_brocker.login(user_info.user_id, user_info.password) == f"[{api}] {id} login success"
+
+def test_buy_nemo_api(mocker: MockerFixture):
+    driver = mocker.Mock(spec=Driver)
+    api = "nemo"
+    code = "AAA"
+    price = 30000
+    counts = 30
+    stock_brocker = StockBrocker("nemo", driver)
+    driver.buy(code, price, counts)
+    assert stock_brocker.buy(code, price, counts) == f"[{api}] {code} {price} {counts} 구매완료"
+
+def test_buy_kiwi_api(mocker: MockerFixture):
+    driver = mocker.Mock(spec=Driver)
+    api = "nemo"
+    #종목코드, 가격, 수량
+    code = "AAA"
+    price = 30000
+    counts = 30
+    stock_brocker = StockBrocker("kiwer", driver)
+    driver.buy(code, price, counts)
+    assert stock_brocker.buy(code, price, counts) == f"[{api}] {code} {price} {counts} 구매완료"
