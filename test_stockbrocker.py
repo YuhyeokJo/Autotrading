@@ -19,8 +19,8 @@ def user_info():
 def test_login_mock(mocker: MockerFixture, user_info):
     driver = mocker.Mock(spec=Driver)
     api = "mock"
-    stock_brocker = StockBrocker("mock")
-    driver.login.return_value = "[mock] abc login suceess"
+    stock_brocker = StockBrocker("mock", driver)
+    driver.login.return_value = "[mock] abc login success"
     assert stock_brocker.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
 
 
