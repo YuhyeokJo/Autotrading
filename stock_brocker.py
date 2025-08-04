@@ -1,0 +1,2 @@
+class StockBrocker:
+    pass
