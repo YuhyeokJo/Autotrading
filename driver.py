@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from kiwer_api import KiwerAPI
 from nemo_api import NemoAPI
 
 
