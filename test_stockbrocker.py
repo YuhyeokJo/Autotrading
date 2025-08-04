@@ -1,6 +1,7 @@
 import pytest
 from pytest_mock import MockerFixture
 from auto_trading_system import AutoTradingSystem
+from driver import StockBrokerDriverInterface
 
 
 class User:
@@ -21,6 +22,21 @@ def test_login_mock(mocker: MockerFixture, user_info):
     driver.select_stock_brocker(api)
     driver.login.return_value = "[mock] abc login success"
     assert driver.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
+
+def test_login_mock_success(mocker: MockerFixture, user_info):
+    api = "mock"
+    auto_trading_system = AutoTradingSystem.select_stock_brocker(api)
+    auto_trading_system.driver = mocker.Mock(spec=StockBrokerDriverInterface)
+    auto_trading_system.driver.login.return_value = True
+    assert auto_trading_system.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
+
+
+def test_login_mock_fail(mocker: MockerFixture, user_info):
+    api = "mock"
+    auto_trading_system = AutoTradingSystem.select_stock_brocker(api)
+    auto_trading_system.driver = mocker.Mock(spec=StockBrokerDriverInterface)
+    auto_trading_system.driver.login.return_value = False
+    assert auto_trading_system.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login failed"
 
 
 def test_login_nemo_mock(mocker: MockerFixture, user_info):
