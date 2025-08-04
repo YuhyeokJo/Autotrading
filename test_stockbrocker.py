@@ -1,5 +1,7 @@
 import pytest
 from pytest_mock import MockerFixture
+
+from driver import NemoDriver, KiwerDriver
 from auto_trading_system import AutoTradingSystem
 
 
@@ -27,7 +29,7 @@ def test_login_nemo_mock(mocker: MockerFixture, user_info):
     driver = mocker.Mock(spec=AutoTradingSystem)
     api = "nemo"
     driver.select_stock_brocker(api)
-    driver.login.return_value = "[nemo] abc login suceess"
+    driver.login.return_value = "[nemo] abc login success"
     assert driver.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
 
 
@@ -35,7 +37,29 @@ def test_login_kiwer_mock(mocker: MockerFixture, user_info):
     driver = mocker.Mock(spec=AutoTradingSystem)
     api = "kiwer"
     driver.select_stock_brocker(api)
-    driver.login.return_value = "[kiwer] abc login suceess"
+    driver.login.return_value = "[kiwer] abc login success"
+    assert driver.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
+
+
+def test_login_nemo_mock(mocker: MockerFixture, user_info):
+    driver = mocker.Mock(spec=AutoTradingSystem)
+    api = "nemo"
+    driver.select_stock_brocker(api)
+    driver.login.return_value = "[nemo] abc login success"
+    assert driver.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
+
+
+def test_login_kiwer_api(user_info):
+    api = "kiwer"
+    driver = AutoTradingSystem(api, KiwerDriver)
+    driver.select_stock_brocker(api)
+    assert driver.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
+
+
+def test_login_nemo_api(user_info):
+    api = "nemo"
+    driver = AutoTradingSystem(api, NemoDriver)
+    driver.select_stock_brocker(api)
     assert driver.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
 
 

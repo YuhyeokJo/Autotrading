@@ -26,3 +26,11 @@ class MockDriver(StockBrokerDriverInterface):
     def login(self, user_id: str, password: str) -> bool:
         self.logged_in = True
         return True
+
+
+class NemoDriver:
+    pass
+
+
+class KiwerDriver:
+    pass
