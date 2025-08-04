@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
 
+from kiwer_api import KiwerAPI
+from nemo_api import NemoAPI
+
 
 class StockBrokerDriverInterface(ABC):
     @abstractmethod
@@ -26,3 +29,59 @@ class MockDriver(StockBrokerDriverInterface):
     def login(self, user_id: str, password: str) -> bool:
         self.logged_in = True
         return True
+
+    def get_price(self, symbol: str) -> float:
+        pass
+
+    def buy(self, symbol: str, quantity: int) -> bool:
+        pass
+
+    def sell(self, symbol: str, quantity: int) -> bool:
+        pass
+
+
+
+class NemoDriver(StockBrokerDriverInterface):
+    def __init__(self):
+        self.api = NemoAPI()
+        self.logged_in = False
+
+    def login(self, user_id: str, password: str) -> bool:
+        try:
+            self.api.cerification(user_id, password)
+            self.logged_in = True
+            return True
+        except Exception as e:
+            print(f"[NemoDriver] Login failed: {e}")
+
+    def get_price(self, symbol: str) -> float:
+        pass
+
+    def buy(self, symbol: str, quantity: int) -> bool:
+        pass
+
+    def sell(self, symbol: str, quantity: int) -> bool:
+        pass
+
+
+class KiwerDriver(StockBrokerDriverInterface):
+    def __init__(self):
+        self.api = KiwerAPI()
+        self.logged_in = False
+
+    def login(self, user_id: str, password: str) -> bool:
+        try:
+            self.api.login(user_id, password)
+            self.logged_in = True
+            return True
+        except Exception as e:
+            print(f"[NemoDriver] Login failed: {e}")
+
+    def get_price(self, symbol: str) -> float:
+        pass
+
+    def buy(self, symbol: str, quantity: int) -> bool:
+        pass
+
+    def sell(self, symbol: str, quantity: int) -> bool:
+        pass
