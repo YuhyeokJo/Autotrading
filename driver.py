@@ -30,6 +30,16 @@ class MockDriver(StockBrokerDriverInterface):
         self.logged_in = True
         return True
 
+    def get_price(self, symbol: str) -> float:
+        pass
+
+    def buy(self, symbol: str, quantity: int) -> bool:
+        pass
+
+    def sell(self, symbol: str, quantity: int) -> bool:
+        pass
+
+
 
 class NemoDriver(StockBrokerDriverInterface):
     def __init__(self):
@@ -58,3 +68,11 @@ class KiwerDriver(StockBrokerDriverInterface):
         except Exception as e:
             print(f"[NemoDriver] Login failed: {e}")
 
+    def get_price(self, symbol: str) -> float:
+        pass
+
+    def buy(self, symbol: str, quantity: int) -> bool:
+        pass
+
+    def sell(self, symbol: str, quantity: int) -> bool:
+        pass
