@@ -80,9 +80,8 @@ def test_buy_mock(mocker: MockerFixture, stock_info):
     driver = mocker.Mock(spec=StockBrokerDriverInterface)
     api = "mock"
     auto_trading_system = AutoTradingSystem(api, driver)
-    driver.buy.return_value = True
-    assert auto_trading_system.buy(stock_info.code, stock_info.price,
-                      stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
+    driver.buy.return_value = '[mock] AAA, 30000, 30 buy success'
+    assert auto_trading_system.buy(stock_info.code, stock_info.price, stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
 
 
 def test_sell_mock(mocker: MockerFixture, stock_info):
