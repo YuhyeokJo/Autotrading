@@ -4,31 +4,37 @@ from driver import Driver
 from stock_brocker import StockBrocker
 
 
-def test_login_mock(mocker: MockerFixture):
+class User:
+    def __init__(self, user_id, password):
+        self.user_id = user_id
+        self.password = password
+
+
+@pytest.fixture
+def user_info():
+    user = User("abc", "1111")
+    return user
+
+
+def test_login_mock(mocker: MockerFixture, user_info):
     driver = mocker.Mock(spec=Driver)
     api = "mock"
-    id = "abc"
-    passward = "1111"
     stock_brocker = StockBrocker("mock", driver)
-    driver.login(id, passward)
-    assert stock_brocker.login(id, passward) == f"[{api}] {id} login success"
+    driver.login(user_info.user_id, user_info.password)
+    assert stock_brocker.login(user_info.user_id, user_info.password) == f"[{api}] {id} login success"
 
 
-def test_login_nemo_mock(mocker: MockerFixture):
+def test_login_nemo_mock(mocker: MockerFixture, user_info):
     driver = mocker.Mock(spec=Driver)
     api = "nemo"
-    id = "abc"
-    passward = "1111"
     stock_brocker = StockBrocker("nemo", driver)
-    driver.login(id, passward)
-    assert stock_brocker.login(id, passward) == f"[{api}] {id} login success"
+    driver.login(user_info.user_id, user_info.password)
+    assert stock_brocker.login(user_info.user_id, user_info.password) == f"[{api}] {id} login success"
 
 
-def test_login_kiwer_mock(mocker: MockerFixture):
+def test_login_kiwer_mock(mocker: MockerFixture, user_info):
     driver = mocker.Mock(spec=Driver)
     api = "kiwer"
-    id = "abc"
-    passward = "1111"
     stock_brocker = StockBrocker("kiwer", driver)
-    driver.login(id, passward)
-    assert stock_brocker.login(id, passward) == f"[{api}] {id} login success"
+    driver.login(user_info.user_id, user_info.password)
+    assert stock_brocker.login(user_info.user_id, user_info.password) == f"[{api}] {id} login success"
