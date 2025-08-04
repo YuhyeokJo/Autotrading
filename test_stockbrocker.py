@@ -99,3 +99,13 @@ def test_get_price_mock(mocker: MockerFixture, stock_info):
     auto_trading_system = AutoTradingSystem(api, driver)
     driver.get_price.return_value = 30000
     assert auto_trading_system.get_price(stock_info.code) == 30000
+
+
+def test_buy_nice_timing(mocker: MockerFixture, stock_info):
+    driver = mocker.Mock(spec=StockBrokerDriverInterface)
+    api = "mock"
+    auto_trading_system = AutoTradingSystem(api, driver)
+    driver.get_price.side_effect = [1000, 2000, 3000]
+    driver.buy.return_value = f"3000 10"
+    assert (auto_trading_system.buy_nice_timing(stock_info.code, total_price=30000) ==
+            f"3000 10")

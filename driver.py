@@ -11,7 +11,7 @@ class StockBrokerDriverInterface(ABC):
         pass
 
     @abstractmethod
-    def buy(self, stock_code: str, price: int, counts: int):
+    def buy(self, stock_code: str, price: float, counts: int):
         pass
 
     @abstractmethod
@@ -27,7 +27,7 @@ class MockDriver(StockBrokerDriverInterface):
         self.logged_in = True
         return True
 
-    def buy(self, stock_code: str, price: int, counts: int):
+    def buy(self, stock_code: str, price: float, counts: int):
         return f"[mock] {stock_code}, {price}, {counts} buy success"
 
     def get_price(self, symbol: str) -> float:
