@@ -15,7 +15,7 @@ class StockBrokerDriverInterface(ABC):
         pass
 
     @abstractmethod
-    def sell(self, symbol: str, quantity: int) -> bool:
+    def sell(self, symbol: str, quantity: int, price: str):
         pass
 
 
@@ -26,3 +26,6 @@ class MockDriver(StockBrokerDriverInterface):
     def login(self, user_id: str, password: str) -> bool:
         self.logged_in = True
         return True
+
+    def sell(self, symbol: str, quantity: int, price: str):
+        return f"[mock] {symbol} : Sell stock( {price} * {quantity} )"
