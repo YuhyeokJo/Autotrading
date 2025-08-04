@@ -1,7 +1,7 @@
 import pytest
 from pytest_mock import MockerFixture
 
-from driver import StockBrokerDriverInterface
+from driver import StockBrokerDriverInterface, KiwerDriver, NemoDriver
 from auto_trading_system import AutoTradingSystem
 
 
@@ -22,7 +22,8 @@ def test_login_mock(mocker: MockerFixture, user_info):
     api = "mock"
     auto_trading_system = AutoTradingSystem(api, driver)
     driver.login.return_value = True
-    assert auto_trading_system.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
+    assert auto_trading_system.login(user_info.user_id,
+                                     user_info.password) == f"[{api}] {user_info.user_id} login success"
 
 
 def test_login_nemo_mock(mocker: MockerFixture, user_info):
@@ -30,7 +31,8 @@ def test_login_nemo_mock(mocker: MockerFixture, user_info):
     api = "nemo"
     auto_trading_system = AutoTradingSystem(api, driver)
     driver.login.return_value = True
-    assert auto_trading_system.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
+    assert auto_trading_system.login(user_info.user_id,
+                                     user_info.password) == f"[{api}] {user_info.user_id} login success"
 
 
 def test_login_kiwer_mock(mocker: MockerFixture, user_info):
@@ -38,21 +40,24 @@ def test_login_kiwer_mock(mocker: MockerFixture, user_info):
     api = "kiwer"
     auto_trading_system = AutoTradingSystem(api, driver)
     driver.login.return_value = True
-    assert auto_trading_system.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
+    assert auto_trading_system.login(user_info.user_id,
+                                     user_info.password) == f"[{api}] {user_info.user_id} login success"
 
 
 def test_login_kiwer_api(user_info):
     api = "kiwer"
-    driver = AutoTradingSystem(api, StockBrokerDriverInterface)
-    driver.select_stock_brocker(api)
-    assert driver.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
+    auto_trading_system = AutoTradingSystem(api, KiwerDriver)
+    auto_trading_system.select_stock_brocker(api)
+    assert auto_trading_system.login(user_info.user_id,
+                                     user_info.password) == f"[{api}] {user_info.user_id} login success"
 
 
 def test_login_nemo_api(user_info):
     api = "nemo"
-    driver = AutoTradingSystem(api, StockBrokerDriverInterface)
-    driver.select_stock_brocker(api)
-    assert driver.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
+    auto_trading_system = AutoTradingSystem(api, NemoDriver)
+    auto_trading_system.select_stock_brocker(api)
+    assert auto_trading_system.login(user_info.user_id,
+                                     user_info.password) == f"[{api}] {user_info.user_id} login success"
 
 
 class Stock:
@@ -74,7 +79,7 @@ def test_buy_mock(mocker: MockerFixture, stock_info):
     auto_trading_system = AutoTradingSystem(api, driver)
     driver.buy.return_value = True
     assert auto_trading_system.buy(stock_info.code, stock_info.price,
-                      stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
+                                   stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
 
 
 def test_sell_mock(mocker: MockerFixture, stock_info):
@@ -83,7 +88,7 @@ def test_sell_mock(mocker: MockerFixture, stock_info):
     auto_trading_system = AutoTradingSystem(api, driver)
     driver.sell.return_value = True
     assert auto_trading_system.sell(stock_info.code, stock_info.price,
-                       stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} sell success"
+                                    stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} sell success"
 
 
 def test_get_price_mock(mocker: MockerFixture, stock_info):
@@ -94,13 +99,13 @@ def test_get_price_mock(mocker: MockerFixture, stock_info):
     assert auto_trading_system.get_price(stock_info.code) == 30000
 
 
-
 def test_sell_nemo_mock(mocker: MockerFixture, stock_info):
     driver = mocker.Mock(spec=StockBrokerDriverInterface)
     api = "nemo"
     auto_trading_system = AutoTradingSystem(api, driver)
     driver.sell.return_value = True
-    assert auto_trading_system.sell(stock_info.code, stock_info.price, stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} sell success"
+    assert auto_trading_system.sell(stock_info.code, stock_info.price,
+                                    stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} sell success"
 
 
 def test_sell_kiwer_mock(mocker: MockerFixture, stock_info):
@@ -108,21 +113,24 @@ def test_sell_kiwer_mock(mocker: MockerFixture, stock_info):
     api = "kiwer"
     auto_trading_system = AutoTradingSystem(api, driver)
     driver.sell.return_value = True
-    assert auto_trading_system.sell(stock_info.code, stock_info.price, stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} sell success"
+    assert auto_trading_system.sell(stock_info.code, stock_info.price,
+                                    stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} sell success"
 
 
 def test_sell_kiwer_api(stock_info):
     api = "kiwer"
-    driver = AutoTradingSystem(api, AutoTradingSystem)
-    driver.select_stock_brocker(api)
-    assert driver.sell(stock_info.code, stock_info.price, stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} sell success"
+    auto_trading_system = AutoTradingSystem(api, KiwerDriver)
+    auto_trading_system.select_stock_brocker(api)
+    assert auto_trading_system.sell(stock_info.code, stock_info.price,
+                                    stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} sell success"
 
 
 def test_sell_nemo_api(stock_info):
     api = "nemo"
-    driver = AutoTradingSystem(api, AutoTradingSystem)
-    driver.select_stock_brocker(api)
-    assert driver.sell(stock_info.code, stock_info.price, stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} sell success"
+    auto_trading_system = AutoTradingSystem(api, NemoDriver)
+    auto_trading_system.select_stock_brocker(api)
+    assert auto_trading_system.sell(stock_info.code, stock_info.price,
+                                    stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} sell success"
 
 
 def test_buy_nemo_mock(mocker: MockerFixture, stock_info):
@@ -131,7 +139,7 @@ def test_buy_nemo_mock(mocker: MockerFixture, stock_info):
     auto_trading_system = AutoTradingSystem(api, driver)
     driver.buy.return_value = True
     assert auto_trading_system.buy(stock_info.code, stock_info.price,
-                                    stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
+                                   stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
 
 
 def test_buy_kiwer_mock(mocker: MockerFixture, stock_info):
@@ -140,23 +148,24 @@ def test_buy_kiwer_mock(mocker: MockerFixture, stock_info):
     auto_trading_system = AutoTradingSystem(api, driver)
     driver.buy.return_value = True
     assert auto_trading_system.buy(stock_info.code, stock_info.price,
-                                    stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
+                                   stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
 
 
 def test_buy_kiwer_api(stock_info):
     api = "kiwer"
-    driver = AutoTradingSystem(api, AutoTradingSystem)
-    driver.select_stock_brocker(api)
-    assert driver.buy(stock_info.code, stock_info.price,
-                       stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
+    auto_trading_system = AutoTradingSystem(api, KiwerDriver)
+    auto_trading_system.select_stock_brocker(api)
+    assert auto_trading_system.buy(stock_info.code, stock_info.price,
+                                   stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
 
 
 def test_buy_nemo_api(stock_info):
     api = "nemo"
-    driver = AutoTradingSystem(api, AutoTradingSystem)
-    driver.select_stock_brocker(api)
-    assert driver.buy(stock_info.code, stock_info.price,
-                       stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
+    auto_trading_system = AutoTradingSystem(api, NemoDriver)
+    auto_trading_system.select_stock_brocker(api)
+    assert auto_trading_system.buy(stock_info.code, stock_info.price,
+                                   stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
+
 
 def test_get_price_nemo_mock(mocker: MockerFixture, stock_info):
     driver = mocker.Mock(spec=StockBrokerDriverInterface)
@@ -170,18 +179,19 @@ def test_get_price_kiwer_mock(mocker: MockerFixture, stock_info):
     driver = mocker.Mock(spec=StockBrokerDriverInterface)
     api = "kiwer"
     auto_trading_system = AutoTradingSystem(api, driver)
-    driver.get_price.return_value = True
+    driver.get_price.return_value = 30000
     assert auto_trading_system.get_price(stock_info.code) == 30000
+
 
 def test_get_price_kiwer_api(stock_info):
     api = "kiwer"
-    driver = AutoTradingSystem(api, AutoTradingSystem)
-    driver.select_stock_brocker(api)
-    assert driver.get_price(stock_info.code) == 30000
+    auto_trading_system = AutoTradingSystem(api, KiwerDriver)
+    auto_trading_system.select_stock_brocker(api)
+    assert 5000 <= auto_trading_system.get_price(stock_info.code) <= 5900
 
 
 def test_get_price_nemo_api(stock_info):
     api = "nemo"
-    driver = AutoTradingSystem(api, AutoTradingSystem)
-    driver.select_stock_brocker(api)
-    assert driver.get_price(stock_info.code) == 30000
+    auto_trading_system = AutoTradingSystem(api, NemoDriver)
+    auto_trading_system.select_stock_brocker(api)
+    assert 5000 <= auto_trading_system.get_price(stock_info.code) <= 5900
