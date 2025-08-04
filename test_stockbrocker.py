@@ -1,13 +1,13 @@
 import pytest
 from pytest_mock import MockerFixture
-
+from driver import Driver
 from kiwer_api import KiwerAPI
 from nemo_api import NemoAPI
 from stock_brocker import StockBrocker
 
 
 def test_login_nemo_api(mocker: MockerFixture):
-    driver = mocker.Mock(spec=NemoAPI)
+    driver = mocker.Mock(spec=Driver)
     api = "nemo"
     id = "abc"
     passward = "1111"
@@ -17,7 +17,7 @@ def test_login_nemo_api(mocker: MockerFixture):
 
 
 def test_login_kiwer_api(mocker: MockerFixture):
-    driver = mocker.Mock(spec=KiwerAPI)
+    driver = mocker.Mock(spec=Driver)
     api = "kiwer"
     id = "abc"
     passward = "1111"
