@@ -45,29 +45,33 @@ class Stock:
         self.price = price
         self.counts = counts
 
+
 @pytest.fixture
 def stock_info(mocker):
     stock = Stock("AAA", 30000, 30)
     return stock
 
+
 def test_buy_mock(mocker: MockerFixture, stock_info):
     driver = mocker.Mock(spec=AutoTradingSystem)
     api = "mock"
     driver.select_stock_brocker(api)
-    driver.buy.return_value = "[mock] abc buy success"
-    assert driver.buy(stock_info.code, stock_info.price, stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
+    assert driver.buy(stock_info.code, stock_info.price,
+                      stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
+
 
 def test_sell_mock(mocker: MockerFixture, stock_info):
     driver = mocker.Mock(spec=AutoTradingSystem)
     api = "mock"
     driver.select_stock_brocker(api)
     driver.sell.return_value = "[mock] abc sell success"
-    assert driver.sell(stock_info.code, stock_info.price,stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} sell success"
+    assert driver.sell(stock_info.code, stock_info.price,
+                       stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} sell success"
+
 
 def test_get_price_mock(mocker: MockerFixture, stock_info):
     driver = mocker.Mock(spec=AutoTradingSystem)
     api = "mock"
     driver.select_stock_brocker(api)
-    driver.get_price.return_value =30000
+    driver.get_price.return_value = 30000
     assert driver.get_price(stock_info.code) == f"[{api}] {stock_info.code} get_price success"
-

@@ -22,3 +22,6 @@ class AutoTradingSystem:
             return f"[{self.api_name}] {user_id} login success"
         else:
             return f"[{self.api_name}] {user_id} login failed"
+
+    def buy(self, stock_code: str, price:int, quantity: int):
+        return self.driver.buy(stock_code, price, quantity)
