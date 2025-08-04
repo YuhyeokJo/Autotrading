@@ -7,8 +7,9 @@ from stock_brocker import StockBrocker
 
 def test_login_nemo_api(mocker: MockerFixture):
     driver = mocker.Mock(spec=NemoAPI)
-    stock_brocker = StockBrocker(driver)
+    api = "nemo"
     id = "abc"
     passward = "1111"
+    stock_brocker = StockBrocker("nemo", driver)
     driver.login(id, passward)
-    assert stock_brocker.login("nemo", id, passward) == f"{id} login success"
+    assert stock_brocker.login(id, passward) == f"[{api}] {id} login success"
