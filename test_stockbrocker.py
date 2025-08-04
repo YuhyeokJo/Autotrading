@@ -1,7 +1,7 @@
 import pytest
 from pytest_mock import MockerFixture
 
-from driver import StockBrokerDriverInterface
+from driver import StockBrokerDriverInterface, NemoDriver, KiwerDriver
 from auto_trading_system import AutoTradingSystem
 
 
@@ -92,6 +92,26 @@ def test_sell_mock(mocker: MockerFixture, stock_info):
     driver.sell.return_value = True
     assert auto_trading_system.sell(stock_info.code, stock_info.price,
                        stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} sell success"
+
+
+def test_sell_nemo(capsys, stock_info):
+    auto_trading_system = AutoTradingSystem("nemo", NemoDriver())
+
+    auto_trading_system.sell(stock_info.code, stock_info.price, stock_info.counts)
+    actual = capsys.readouterr()
+
+    expected = f"[NEMO]{stock_info.code} sell stock ( price : {stock_info.price} ) * ( count : {stock_info.counts})"
+    assert actual.out.strip("\n") == expected
+
+
+def test_sell_kiwer(capsys, stock_info):
+    auto_trading_system = AutoTradingSystem("kiwer", KiwerDriver())
+
+    auto_trading_system.sell(stock_info.code, stock_info.price, stock_info.counts)
+    actual = capsys.readouterr()
+
+    expected = f"{stock_info.code} : Sell stock ( {stock_info.price} * {stock_info.counts}"
+    assert actual.out.strip("\n") == expected
 
 
 def test_get_price_mock(mocker: MockerFixture, stock_info):

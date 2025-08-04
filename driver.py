@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
 
+from kiwer_api import KiwerAPI
+from nemo_api import NemoAPI
+
 
 class StockBrokerDriverInterface(ABC):
     @abstractmethod
@@ -31,9 +34,39 @@ class MockDriver(StockBrokerDriverInterface):
         return True
 
 
-class NemoDriver:
-    pass
+class NemoDriver(StockBrokerDriverInterface):
+
+    def login(self, user_id: str, password: str) -> bool:
+        pass
+
+    def get_price(self, symbol: str) -> float:
+        pass
+
+    def buy(self, symbol: str, quantity: int) -> bool:
+        pass
+
+    def __init__(self):
+        self.api = NemoAPI()
+
+    def sell(self, symbol: str, price: int, quantity: int) -> bool:
+        self.api.selling_stock(symbol, price, quantity)
+        return True
 
 
-class KiwerDriver:
-    pass
+class KiwerDriver(StockBrokerDriverInterface):
+    def __init__(self):
+        self.api = KiwerAPI()
+
+    def login(self, user_id: str, password: str) -> bool:
+        pass
+
+    def get_price(self, symbol: str) -> float:
+        pass
+
+    def buy(self, symbol: str, quantity: int) -> bool:
+        pass
+
+    def sell(self, symbol: str, price: int, quantity: int) -> bool:
+        self.api.sell(symbol, quantity, price)
+        return True
+
