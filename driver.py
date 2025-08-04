@@ -54,6 +54,15 @@ class NemoDriver(StockBrokerDriverInterface):
         except Exception as e:
             print(f"[NemoDriver] Login failed: {e}")
 
+    def get_price(self, symbol: str) -> float:
+        pass
+
+    def buy(self, symbol: str, quantity: int) -> bool:
+        pass
+
+    def sell(self, symbol: str, quantity: int) -> bool:
+        pass
+
 
 class KiwerDriver(StockBrokerDriverInterface):
     def __init__(self):
