@@ -1,7 +1,7 @@
 import pytest
 from pytest_mock import MockerFixture
 
-from driver import NemoDriver, KiwerDriver
+from driver import StockBrokerDriverInterface
 from auto_trading_system import AutoTradingSystem
 
 
@@ -18,27 +18,27 @@ def user_info():
 
 
 def test_login_mock(mocker: MockerFixture, user_info):
-    driver = mocker.Mock(spec=AutoTradingSystem)
+    driver = mocker.Mock(spec=StockBrokerDriverInterface)
     api = "mock"
-    driver.select_stock_brocker(api)
-    driver.login.return_value = "[mock] abc login success"
-    assert driver.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
+    auto_trading_system = AutoTradingSystem(api, driver)
+    driver.login.return_value = True
+    assert auto_trading_system.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
 
 
 def test_login_nemo_mock(mocker: MockerFixture, user_info):
-    driver = mocker.Mock(spec=AutoTradingSystem)
+    driver = mocker.Mock(spec=StockBrokerDriverInterface)
     api = "nemo"
-    driver.select_stock_brocker(api)
-    driver.login.return_value = "[nemo] abc login success"
-    assert driver.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
+    auto_trading_system = AutoTradingSystem(api, driver)
+    driver.login.return_value = True
+    assert auto_trading_system.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
 
 
 def test_login_kiwer_mock(mocker: MockerFixture, user_info):
-    driver = mocker.Mock(spec=AutoTradingSystem)
+    driver = mocker.Mock(spec=StockBrokerDriverInterface)
     api = "kiwer"
-    driver.select_stock_brocker(api)
-    driver.login.return_value = "[kiwer] abc login success"
-    assert driver.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
+    auto_trading_system = AutoTradingSystem(api, driver)
+    driver.login.return_value = True
+    assert auto_trading_system.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
 
 
 def test_login_nemo_mock(mocker: MockerFixture, user_info):
