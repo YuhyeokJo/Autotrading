@@ -56,6 +56,7 @@ def test_buy_mock(mocker: MockerFixture, stock_info):
     driver = mocker.Mock(spec=AutoTradingSystem)
     api = "mock"
     driver.select_stock_brocker(api)
+    driver.buy.return_value = "[mock] AAA, 30000, 30 buy success"
     assert driver.buy(stock_info.code, stock_info.price,
                       stock_info.counts) == f"[{api}] {stock_info.code}, {stock_info.price}, {stock_info.counts} buy success"
 
