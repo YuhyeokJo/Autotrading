@@ -23,5 +23,5 @@ class AutoTradingSystem:
         else:
             return f"[{self.api_name}] {user_id} login failed"
 
-    def sell(self, symbol: str, quantity: int, price: str):
+    def sell(self, symbol: str, quantity: int, price: float):
         self.driver.sell(symbol, quantity, price)
