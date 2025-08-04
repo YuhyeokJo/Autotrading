@@ -1,4 +1,4 @@
-from driver import MockDriver, StockBrokerDriverInterface
+from driver import MockDriver, StockBrokerDriverInterface, NemoDriver, KiwerDriver
 
 
 class AutoTradingSystem:
@@ -11,6 +11,10 @@ class AutoTradingSystem:
     def select_stock_brocker(cls, api_name: str) -> "AutoTradingSystem":
         if api_name == "mock":
             driver = MockDriver()
+        elif api_name == 'nemo':
+            driver = NemoDriver()
+        elif api_name == 'kiwer':
+            driver = KiwerDriver()
         else:
             raise ValueError(f"Unsupported API: {api_name}")
 
