@@ -35,3 +35,10 @@ class MockDriver(StockBrokerDriverInterface):
 
     def sell(self, symbol: str, quantity: int) -> bool:
         pass
+
+class NemoDriver:
+    pass
+
+
+class KiwerDriver:
+    pass
