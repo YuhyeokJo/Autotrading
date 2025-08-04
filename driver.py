@@ -11,7 +11,7 @@ class StockBrokerDriverInterface(ABC):
         pass
 
     @abstractmethod
-    def buy(self, symbol: str, quantity: int) -> bool:
+    def buy(self, stock_code: str, price: float, counts: int):
         pass
 
     @abstractmethod
@@ -26,3 +26,19 @@ class MockDriver(StockBrokerDriverInterface):
     def login(self, user_id: str, password: str) -> bool:
         self.logged_in = True
         return True
+
+    def buy(self, stock_code: str, price: float, counts: int):
+        return f"[mock] {stock_code}, {price}, {counts} buy success"
+
+    def get_price(self, symbol: str) -> float:
+        pass
+
+    def sell(self, symbol: str, quantity: int) -> bool:
+        pass
+
+class NemoDriver:
+    pass
+
+
+class KiwerDriver:
+    pass
