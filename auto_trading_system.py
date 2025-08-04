@@ -4,7 +4,7 @@ from driver import MockDriver, StockBrokerDriverInterface
 class AutoTradingSystem:
     def __init__(self, api_name: str, driver: StockBrokerDriverInterface):
         self.api_name = api_name
-        self.driver = driver
+        self._driver = driver
         self.logged_in = False
 
     @classmethod
@@ -17,11 +17,11 @@ class AutoTradingSystem:
         return cls(api_name, driver)
 
     def login(self, user_id: str, password: str) -> str:
-        if self.driver.login(user_id, password):
+        if self._driver.login(user_id, password):
             self.logged_in = True
             return f"[{self.api_name}] {user_id} login success"
         else:
             return f"[{self.api_name}] {user_id} login failed"
 
     def buy(self, stock_code: str, price:int, quantity: int):
-        return self.driver.buy(stock_code, price, quantity)
+        return self._driver.buy(stock_code, price, quantity)
