@@ -24,17 +24,13 @@ def test_login_mock(mocker: MockerFixture, user_info):
     assert stock_brocker.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
 
 
-def test_login_nemo_mock(mocker: MockerFixture, user_info):
-    driver = mocker.Mock(spec=Driver)
+def test_login_nemo_mock(user_info):
     api = "nemo"
-    stock_brocker = StockBrocker("nemo", driver)
-    driver.login(user_info.user_id, user_info.password)
+    stock_brocker = StockBrocker("nemo")
     assert stock_brocker.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
 
 
-def test_login_kiwer_mock(mocker: MockerFixture, user_info):
-    driver = mocker.Mock(spec=Driver)
+def test_login_kiwer_mock(user_info):
     api = "kiwer"
-    stock_brocker = StockBrocker("kiwer", driver)
-    driver.login(user_info.user_id, user_info.password)
+    stock_brocker = StockBrocker("kiwer")
     assert stock_brocker.login(user_info.user_id, user_info.password) == f"[{api}] {user_info.user_id} login success"
