@@ -1,8 +1,6 @@
 import pytest
 from pytest_mock import MockerFixture
 from driver import Driver
-from kiwer_api import KiwerAPI
-from nemo_api import NemoAPI
 from stock_brocker import StockBrocker
 
 
